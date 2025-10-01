@@ -9,6 +9,9 @@ class HTMLNode:
         raise NotImplementedError("")
 
     def props_to_html(self):
+        if self.props is None:
+            return ""
+        
         href = self.props.get("href").strip()
         target = self.props.get("target").strip()
         return f"href=\"{href}\" target=\"{target}\""
