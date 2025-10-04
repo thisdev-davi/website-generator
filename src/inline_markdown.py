@@ -16,14 +16,14 @@ def split_nodes_delimiter(old_nodes, delimiter, text_type):
         if len(parts) % 2 == 0:
             raise ValueError(f"Unmatched delimiter {delimiter}!")
         
-        nodes = [] # temporary
+        aux = [] # temporary
         for i, part in enumerate(parts):
             if i % 2 == 0:
                 if part != "":
-                    nodes.append(TextNode(part, TextType.TEXT))
+                    aux.append(TextNode(part, TextType.TEXT))
             else:
-                nodes.append(TextNode(part, text_type))
-        result.extend(nodes)                
+                aux.append(TextNode(part, text_type))
+        result.extend(aux)                
     return result
 
     
@@ -99,3 +99,20 @@ def text_to_textnode(text):
     parts = split_nodes_images(parts)
     parts = split_nodes_links(parts)
     return parts
+
+def markdown_to_block(markdown):
+    split_text = markdown.split("\n\n")
+    blocks = []
+    for text in split_text:
+        text = text.strip()
+        if text == "":
+            continue
+
+        split_lines = text.split("\n")
+        aux = []
+        for p in split_lines:
+            aux.append(p.strip())
+
+        text = "\n".join(aux)
+        blocks.append(text)
+    return blocks
