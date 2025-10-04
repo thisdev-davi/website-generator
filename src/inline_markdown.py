@@ -1,3 +1,4 @@
+from cgitb import text
 from textnode import TextType, TextNode
 import re
 
@@ -53,8 +54,7 @@ def split_nodes_images(old_nodes):
                     result.append(TextNode(remaining, TextType.TEXT))
                 break
 
-            alt = parts[0][0]
-            url = parts[0][1]
+            alt, url = parts[0]
             string = f"![{alt}]({url})"
             before, after = remaining.split(string, 1)
             if before != "":
@@ -64,4 +64,38 @@ def split_nodes_images(old_nodes):
     return result
             
 def split_nodes_links(old_nodes):
-    pass
+    result = []
+    for node in old_nodes:
+        if node.text_type != TextType.TEXT:
+            result.append(node)
+            continue
+
+        if not extract_markdown_links(node.text):
+            result.append(node)
+            continue
+        
+        remaining = node.text
+        while True:
+            parts = extract_markdown_links(remaining)
+            if not parts:
+                if remaining != "":
+                    result.append(TextNode(remaining, TextType.TEXT))
+                break
+
+            alt, url = parts[0]
+            string = f"[{alt}]({url})"
+            before, after = remaining.split(string, 1)
+            if before != "":
+                result.append(TextNode(before, TextType.TEXT))
+            result.append(TextNode(alt,TextType.LINK, url=url))
+            remaining = after
+    return result
+
+def text_to_textnode(text):
+    parts = [TextNode(text, TextType.TEXT)]
+    parts = split_nodes_delimiter(parts, "`", TextType.CODE)
+    parts = split_nodes_delimiter(parts, "**", TextType.BOLD)
+    parts = split_nodes_delimiter(parts, "_", TextType.ITALIC)
+    parts = split_nodes_images(parts)
+    parts = split_nodes_links(parts)
+    return parts
