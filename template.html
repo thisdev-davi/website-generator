@@ -1,0 +1,70 @@
+<html>
+
+<head>
+    <title>{{ Title }}</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+    <div class="ide-layout">
+        <!-- sidebar (activity bar) -->
+        <div class="sidebar">
+            <div class="sidebar-icon active" title="Explorer"
+                style="background-color: var(--foreground); mask-image: url('https://api.iconify.design/codicon:files.svg'); -webkit-mask-image: url('https://api.iconify.design/codicon:files.svg');">
+            </div>
+            <div class="sidebar-icon" title="Search"
+                style="background-color: var(--comment); mask-image: url('https://api.iconify.design/codicon:search.svg'); -webkit-mask-image: url('https://api.iconify.design/codicon:search.svg');">
+            </div>
+            <div class="sidebar-icon" title="Source Control"
+                style="background-color: var(--comment); mask-image: url('https://api.iconify.design/codicon:source-control.svg'); -webkit-mask-image: url('https://api.iconify.design/codicon:source-control.svg');">
+            </div>
+        </div>
+
+        <!-- explorer panel -->
+        <div class="explorer">
+            <div class="explorer-header">Explorer: Project</div>
+            <div class="explorer-item active">
+                <span style="margin-right: 5px;">📄</span> index.md
+            </div>
+            <div class="explorer-item">
+                <span style="margin-right: 5px;">📄</span> about.md
+            </div>
+            <div class="explorer-item">
+                <span style="margin-right: 5px;">📄</span> contact.md
+            </div>
+        </div>
+
+        <!-- main Editor Area -->
+        <div class="main-editor">
+            <div class="tab-bar">
+                <div class="tab">
+                    <span style="color: var(--yellow);">M↓</span>
+                    {{ Title }}
+                    <span class="close-icon">×</span>
+                </div>
+            </div>
+
+            <div class="content-area">
+                <div class="markdown-body">
+                    {{ Content }}
+                </div>
+            </div>
+
+            <!-- status bar -->
+            <div class="status-bar">
+                <div class="status-left">
+                    <span>main*</span>
+                    <span>0 errors, 0 warnings</span>
+                </div>
+                <div class="status-right">
+                    <span>Ln 1, Col 1</span>
+                    <span>UTF-8</span>
+                    <span>Markdown</span>
+                    <span>Prettier</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
